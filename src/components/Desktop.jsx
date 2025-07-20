@@ -30,7 +30,7 @@ const Desktop = () => {
       .fade-in-down {
         opacity: 0;
         transform: translateY(-10px);
-        animation: fadeInDown 0.5s ease-out forwards;
+        animation: fadeInDown 1.5s ease-out forwards;
       }
 
       @keyframes fadeInDown {

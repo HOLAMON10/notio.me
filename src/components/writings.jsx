@@ -5,172 +5,247 @@ import { IoChevronForwardSharp } from "react-icons/io5";
 const Writings = () => {
   const poems = [
     {
-      id: "thing-of-beauty",
-      title: "A Thing of Beauty",
+      id: "ode-to-a-nightingale",
+      title: "Nadie Se Salva Solo",
       content: `
-A thing of beauty is a joy forever:
-Its loveliness increases, it will never
-Pass into nothingness; but still will keep
-A bower quiet for us, and a sleep
-Full of sweet dreams, and health, and quiet breathing.
+Nadie soporta la existencia solo.
+Nadie carga con el peso miserable de sí mismo.
+Nadie aguanta el huracán neurótico de la infernal soledad.
+
+Nunca nadie se salva solo.
+
+Un filósofo dijo una vez:
+"Lo sabio es pedir ayuda."
+y siguió su camino en la montaña.
+
+La idea no es perderse en el Otro,
+pero sabernos libres con el Otro,
+porque nadie nunca se salva solo.
       `,
+      filename: "patagonia.webp",
     },
     {
-      id: "ode-to-a-nightingale",
-      title: "Ode to a Nightingale",
+      id: "thing-of-beauty",
+      title: "Dear Dante",
       content: `
-My heart aches, and a drowsy numbness pains
-My sense, as though of hemlock I had drunk...
+The devil between your thighs,
+dont let us have a bite,
+of a that submarine of wine.
+Only a pretentious moment,
+we dont really want.
+One step to the longest stair,
+too scare to lift up that way.
+Think twice;
+and run out to another stay.
+just to enter Dante's Cave.
       `,
+      filename: "dante1.webp",
     },
     {
       id: "road-not-taken",
-      title: "The Road Not Taken",
+      title: "Laberinto",
       content: `
-Two roads diverged in a yellow wood,
-And sorry I could not travel both...
+Planeando en este inexplicable camino,
+cuyo laberinto tropieza el todo del mundo.
+Buscando una certeza que no viene,
+no viene y no está en esta parte.
+
+El veneno y Florencia en la lejanía,
+de Barcelona que se aleja con cada segundo.
+Tan cerca que desde ese momento,
+ningún hombre se atrevió a tocar,
+ella sigue rondando los laureles,
+como Cervantes, confiados de su llegada.
+
+Si ningún hombre la sintió otra vez,
+estas palabras mentiras y falacias traerán,
+y nadie más volvió a amar.
+Tapadas por las sombras de la historia.
+
+Aquello inexplicable, irrazonable y humano.
+Quizás demasiado.
       `,
+      filename: "writing1.webp",
     },
     {
       id: "if",
-      title: "If—",
+      title: "Efimero",
       content: `
-If you can keep your head when all about you
-Are losing theirs and blaming it on you...
+Lo efimero como uno, dos, tres,
+con el querer de ser uno.
+Sobre una cama antigua,
+encontrando a lo que ibamos,
+ibamos a ser efimeros.
+
+Un amor con pradera al sur,
+buscando el Norte.
+No venia el horizonte,
+sobre una cama antigua, 
+no era el unico hombre. 
       `,
+      filename: "writing2.webp",
     },
     {
       id: "daffodils",
-      title: "Daffodils",
+      title: "Bahia",
       content: `
-I wandered lonely as a cloud
-That floats on high o'er vales and hills...
+Una bahía de vientos chocantes,
+que se deslizan entre el roce.
+¿o el goce?
+Las hojas se mecen en el viento,
+bailan con las almas,
+como si de mucho tiempo se tratase,
+y otra vez.
+Los océanos entonan su melodía,
+guiados por la luna,
+criados por el viento.
       `,
+      filename: "bahia.webp",
     },
   ];
 
   const [activePoem, setActivePoem] = useState(poems[0].id);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [fadeKey, setFadeKey] = useState(0);
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const [fading, setFading] = useState(false);
 
   const currentPoem = poems.find((poem) => poem.id === activePoem);
 
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .fade-in-down {
-        opacity: 0;
-        transform: translateY(-10px);
-        animation: fadeInDown 0.4s ease-out forwards;
-      }
+  const activeColor = "indigo";
 
-      @keyframes fadeInDown {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setPageLoaded(true);
+    }, 50);
+    return () => clearTimeout(timeout);
   }, []);
 
-  return (
-    <div className="bg-white flex justify-center px-4 mt-24">
-      <div className="flex max-w-6xl w-full relative">
+  const handlePoemChange = (id) => {
+    if (id === activePoem) return;
+    setFading(true);
+    setTimeout(() => {
+      setActivePoem(id);
+      setFading(false);
+    }, 300);
+  };
 
-        {/* Sidebar - desktop */}
-        <aside className="hidden md:block w-56 pr-8 py-8 border-r text-sm text-gray-700">
-          <div className="mb-6">
-            <a href="/" className="text-gray-500 text-xs hover:underline">
+  const getPoemButtonClasses = (poemId) => {
+    const isActive = activePoem === poemId;
+
+    return [
+      "relative block text-left w-full px-1 py-0.5 transition-colors duration-300",
+      "after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-current after:transition-all after:duration-300",
+      isActive
+        ? `text-${activeColor}-800 after:w-full`
+        : `text-gray-700 after:w-0 hover:text-${activeColor}-700 hover:after:w-full`,
+    ].join(" ");
+  };
+
+  return (
+    <div
+      className={`bg-gradient-to-br from-cyan-50 via-white to-purple-50 min-h-[105vh] transition-opacity duration-500 ${
+        pageLoaded ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <div className="flex justify-center px-4 py-16 sm:pl-36 pb-24">
+        <div className="flex max-w-6xl w-full relative">
+          {/* Sidebar */}
+          <aside className="hidden md:block w-56 pr-8 py-12 border-r text-sm text-gray-700 sm:py-36 sticky top-0  overflow-y-auto">
+            <div className="mb-6">
+              <a href="/" className="text-gray-500 text-xs hover:text-black transition-colors duration-300">
+                 ⤺ Home
+              </a>
+            </div>
+            <nav className="space-y-2">
+              {poems.map((poem) => (
+                <button
+                  key={poem.id}
+                  onClick={() => handlePoemChange(poem.id)}
+                  className={getPoemButtonClasses(poem.id)}
+                >
+                  {poem.title}
+                </button>
+              ))}
+            </nav>
+          </aside>
+
+          {/* Mobile Nav */}
+          <div className="md:hidden absolute top-0 left-0 right-0 flex justify-between items-center px-4">
+            <a href="/" className="text-sm text-gray-700 ">
               ← Home
             </a>
-          </div>
-          <nav className="space-y-2">
-            {poems.map((poem) => (
-              <button
-                key={poem.id}
-                onClick={() => {
-                  setActivePoem(poem.id);
-                  setFadeKey(prev => prev + 1); // trigger animation
-                }}
-                className={`block text-left w-full hover:text-blue-600 ${
-                  activePoem === poem.id ? "font-semibold text-blue-700" : ""
-                }`}
-              >
-                {poem.title}
-              </button>
-            ))}
-          </nav>
-        </aside>
-
-        {/* Mobile top nav */}
-        <div className="md:hidden absolute top-0 left-0 right-0 flex justify-between items-center px-4 py-2 bg-white shadow z-10">
-          <a href="/" className="text-sm text-gray-700 underline">
-            ← Home
-          </a>
-          <button
-            onClick={() => setMenuOpen(true)}
-            className="text-gray-700 text-xl"
-          >
-            <FiMenu />
-          </button>
-        </div>
-
-        {/* Mobile slide-in menu */}
-        <div
-          className={`fixed top-0 right-0 h-full bg-gray-50 z-20 transform transition-transform duration-300 ease-in-out md:hidden shadow-lg`}
-          style={{
-            width: '60%',
-            transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
-          }}
-        >
-          <div className="p-4 space-y-2 pt-12">
-            <span className="text-lg font-semibold block mb-4">Poems</span>
-            {poems.map((poem) => (
-              <button
-                key={poem.id}
-                onClick={() => {
-                  setActivePoem(poem.id);
-                  setFadeKey(prev => prev + 1);
-                  setMenuOpen(false);
-                }}
-                className={`block w-full text-left text-lg hover:text-blue-600 ${
-                  activePoem === poem.id ? "font-semibold text-blue-700" : ""
-                }`}
-              >
-                {poem.title}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="absolute -left-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 shadow rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition"
-          >
-            <IoChevronForwardSharp className="text-lg text-gray-700" />
-          </button>
-        </div>
-
-        {/* Main Content */}
-        <main className="flex-1 py-8 px-8 text-gray-900 mt-12 md:mt-0">
-          {currentPoem && (
-            <section
-              id={currentPoem.id}
-              key={fadeKey}
-              className="fade-in-down"
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="text-gray-700 text-xl"
             >
-              <h2 className="text-2xl font-semibold mb-4">
-                {currentPoem.title}
-              </h2>
-              <div className="text-gray-700 whitespace-pre-wrap pl-4">
-                {currentPoem.content.trim()}
-              </div>
-            </section>
-          )}
-        </main>
+              <FiMenu />
+            </button>
+          </div>
+
+          {/* Mobile Slide-In Menu */}
+          <div
+            className={`fixed top-0 right-0 h-full bg-gray-50 z-20 transform transition-transform duration-300 ease-in-out md:hidden shadow-lg`}
+            style={{
+              width: "50%",
+              transform: menuOpen ? "translateX(0)" : "translateX(100%)",
+            }}
+          >
+            <div className="p-4 pt-12">
+              <span className="text-lg font-semibold block mb-4">Poems</span>
+              {poems.map((poem) => (
+                <button
+                  key={poem.id}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setTimeout(() => handlePoemChange(poem.id), 100);
+                  }}
+                  className={getPoemButtonClasses(poem.id)}
+                >
+                  {poem.title}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="absolute -left-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 shadow rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition"
+            >
+              <IoChevronForwardSharp
+                className={`text-lg text-gray-700 transition-transform ${
+                  menuOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Main Content */}
+          <main className="flex-1 px-8 text-gray-900 mt-12 md:mt-0 overflow-y-auto">
+            <div
+              className={`transition-all duration-300 transform ${
+                fading
+                  ? "opacity-0 -translate-y-2"
+                  : "opacity-100 translate-y-0"
+              }`}
+            >
+              {currentPoem && (
+                <section id={currentPoem.id}>
+                  <h2 className="text-2xl font-semibold mb-4">
+                    {currentPoem.title}
+                  </h2>
+                  {currentPoem.filename && (
+                    <img
+                      src={`/images/photos/${currentPoem.filename}`}
+                      alt={currentPoem.title}
+                      className="w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4"
+                    />
+                  )}
+                  <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
+                    {currentPoem.content.trim()}
+                  </div>
+                </section>
+              )}
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );

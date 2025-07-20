@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const Collage = () => {
   const filenames = [
-    "1.jpg", "3.jpg", "4.jpg", "5.jpg", "2.jpg", "8.jpg", "9.jpg", "23.jpg", "6.jpg", "7.jpg", "30.jpg", "10.jpg", "11.jpg", "24.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg", "16.jpg", "22.jpg", "17.jpg", "18.jpg", "28.jpg", "25.jpg", "19.jpg", "26.jpg", "27.jpg", "29.jpg",
+    "1.webp", "3.webp", "4.webp", "5.webp", "2.webp", "8.webp", "9.webp", "23.webp", "6.webp", "7.webp", "30.webp", "10.webp", "11.webp", "24.webp", "12.webp", "13.webp", "14.webp", "15.webp", "16.webp", "22.webp", "17.webp", "18.webp", "28.webp", "25.webp", "19.webp", "26.webp", "27.webp", "29.webp",
   ];
 
   useEffect(() => {
