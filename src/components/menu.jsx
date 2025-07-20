@@ -65,7 +65,7 @@ const HorizontalMenu = () => {
     <footer className="flex justify-center items-center mb-3 bg-transparent">
       <div
         className={`flex gap-2 bg-white rounded-full shadow-md px-2 py-1 transition-all duration-150 ease-out ${
-          !isMobile && hoveredIndex !== null ? "px-6" : ""
+          !isMobile && hoveredIndex !== null ? "px-4" : ""
         }`}
       >
         {menuItems.map((item, index) => {

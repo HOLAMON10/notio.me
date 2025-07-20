@@ -53,17 +53,22 @@ const Collage = () => {
   };
 
   return (
-    <div className="collage">
-      {filenames.map((file) => (
-        <img
-          key={file}
-          src={`/images/photos/${file}`}
-          alt=""
-          loading="lazy"
-          onLoad={() => handleLoad(file)}
-          className={`collage__img ${loaded[file] ? "collage__img--loaded" : ""}`}
-        />
-      ))}
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1">
+        <div className="collage">
+          {filenames.map((file) => (
+            <img
+              key={file}
+              src={`/images/photos/${file}`}
+              alt=""
+              loading="lazy"
+              onLoad={() => handleLoad(file)}
+              style={{ aspectRatio: "4/3" }}
+              className={`collage__img ${loaded[file] ? "collage__img--loaded" : ""}`}
+            />
+          ))}
+        </div>
+      </main>
     </div>
   );
 };

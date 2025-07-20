@@ -30,7 +30,7 @@ const Desktop = () => {
       .fade-in-down {
         opacity: 0;
         transform: translateY(-10px);
-        animation: fadeInDown 1.5s ease-out forwards;
+        animation: fadeInDown .5s ease-out forwards;
       }
 
       @keyframes fadeInDown {
@@ -62,7 +62,7 @@ const Desktop = () => {
 
   const raunoStyle = {
     transform: `
-      translate(-50%, -50%) 
+      translate(-50%, -75%) 
       skewX(-48deg) 
       skewY(14deg) 
       scaleX(2) 
@@ -87,7 +87,7 @@ const Desktop = () => {
   };
 
   return (
-    <div className="relative w-full h-full bg-transparent">
+    <div className="relative w-full min-h-screen bg-transparent">
       <div
         className="flex gap-6 lg:gap-24 justify-center mt-48 px-4"
         style={raunoStyle}
