@@ -1,9 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Collage = () => {
   const filenames = [
-    "1.webp", "3.webp", "4.webp", "5.webp", "2.webp", "8.webp", "9.webp", "23.webp", "6.webp", "7.webp", "30.webp", "10.webp", "11.webp", "24.webp", "12.webp", "13.webp", "14.webp", "15.webp", "16.webp", "22.webp", "17.webp", "18.webp", "28.webp", "25.webp", "19.webp", "26.webp", "27.webp", "29.webp",
+    "1.webp", "3.webp", "4.webp", "5.webp", "2.webp", "8.webp", "9.webp", "23.webp",
+    "6.webp", "7.webp", "30.webp", "10.webp", "11.webp", "24.webp", "12.webp", "13.webp",
+    "14.webp", "15.webp", "16.webp", "22.webp", "17.webp", "18.webp", "28.webp", "25.webp",
+    "19.webp", "26.webp", "27.webp", "29.webp",
   ];
+
+  const [loaded, setLoaded] = useState({});
 
   useEffect(() => {
     const style = document.createElement("style");
@@ -16,17 +21,19 @@ const Collage = () => {
         grid-template-columns: 1fr;
       }
 
-      .collage img {
-        opacity: 0;
-        transform: translateY(-10px);
-        animation: fade-in 1.5s ease-out forwards;
+      .collage__img {
+        width: 100%;
+        max-height: 570px;
+        object-fit: cover;
+        display: block;
+        filter: blur(20px);
+        transition: filter 0.5s ease, opacity 0.5s ease;
+        opacity: 0.8;
       }
 
-      @keyframes fade-in {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .collage__img--loaded {
+        filter: blur(0);
+        opacity: 1;
       }
 
       @media (min-width: 768px) {
@@ -41,6 +48,10 @@ const Collage = () => {
     };
   }, []);
 
+  const handleLoad = (file) => {
+    setLoaded((prev) => ({ ...prev, [file]: true }));
+  };
+
   return (
     <div className="collage">
       {filenames.map((file) => (
@@ -49,12 +60,8 @@ const Collage = () => {
           src={`/images/photos/${file}`}
           alt=""
           loading="lazy"
-          style={{
-            width: "100%",
-            maxHeight: "570px",
-            objectFit: "cover",
-            display: "block",
-          }}
+          onLoad={() => handleLoad(file)}
+          className={`collage__img ${loaded[file] ? "collage__img--loaded" : ""}`}
         />
       ))}
     </div>
