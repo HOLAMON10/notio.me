@@ -115,6 +115,7 @@ criados por el viento.
   const activeColor = "black";
 
   useEffect(() => {
+    document.title = "Desktop";
     const timeout = setTimeout(() => {
       setPageLoaded(true);
     }, 50);
@@ -145,7 +146,7 @@ criados por el viento.
 
   return (
     <div
-      className={`bg-gradient-to-br from-cyan-50 via-white to-purple-50 min-h-[105vh] transition-opacity duration-500 ${
+      className={`bg-gradient-to-br from-slate-100 via-slate to-slate-300 min-h-[105vh] transition-opacity duration-500 ${
         pageLoaded ? "opacity-100" : "opacity-0"
       }`}
     >

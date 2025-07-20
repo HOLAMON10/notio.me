@@ -1,7 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const Desktop = () => {
   const videoRefs = useRef({});
+  const [loaded, setLoaded] = useState({}); // track load state per app
 
   const apps = [
     {
@@ -25,6 +26,8 @@ const Desktop = () => {
   ];
 
   useEffect(() => {
+    document.title = "Desktop";
+
     const style = document.createElement("style");
     style.innerHTML = `
       .fade-in-down {
@@ -60,6 +63,10 @@ const Desktop = () => {
     }
   };
 
+  const handleLoadedData = (label) => {
+    setLoaded((prev) => ({ ...prev, [label]: true }));
+  };
+
   const raunoStyle = {
     transform: `
       translate(-50%, -75%) 
@@ -71,7 +78,7 @@ const Desktop = () => {
       translateZ(0)
     `,
     position: "absolute",
-    top: "60%",
+    top: "50%",
     left: "50%",
     willChange: "transform",
     backfaceVisibility: "hidden",
@@ -101,6 +108,8 @@ const Desktop = () => {
             sizeClasses = "w-48 h-32 md:w-64 md:h-48 lg:w-96 lg:h-72";
           }
 
+          const isLoaded = loaded[app.label];
+
           return (
             <div
               key={app.label}
@@ -123,13 +132,19 @@ const Desktop = () => {
                     ref={(el) => (videoRefs.current[app.label] = el)}
                     src={app.image}
                     muted
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    onLoadedData={() => handleLoadedData(app.label)}
+                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform ${
+                      isLoaded ? "blur-0 opacity-100" : "blur-md opacity-80"
+                    }`}
                   />
                 ) : (
                   <img
                     src={app.image}
                     alt={app.label}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    onLoad={() => handleLoadedData(app.label)}
+                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform ${
+                      isLoaded ? "blur-0 opacity-100" : "blur-md opacity-80"
+                    }`}
                   />
                 )}
               </div>

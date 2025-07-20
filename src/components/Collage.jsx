@@ -11,6 +11,7 @@ const Collage = () => {
   const [loaded, setLoaded] = useState({});
 
   useEffect(() => {
+    document.title = "Pictures";
     const style = document.createElement("style");
     style.innerHTML = `
       .collage {
