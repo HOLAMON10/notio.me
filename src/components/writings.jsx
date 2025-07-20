@@ -111,7 +111,7 @@ criados por el viento.
 
   const currentPoem = poems.find((poem) => poem.id === activePoem);
 
-  const activeColor = "indigo";
+  const activeColor = "black";
 
   useEffect(() => {
     const timeout = setTimeout(() => {
