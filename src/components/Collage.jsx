@@ -63,7 +63,7 @@ const Collage = () => {
               alt=""
               loading="lazy"
               onLoad={() => handleLoad(file)}
-              style={{ aspectRatio: "4/3" }}
+              style={{ aspectRatio: "4/5" }}
               className={`collage__img ${loaded[file] ? "collage__img--loaded" : ""}`}
             />
           ))}
