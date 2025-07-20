@@ -108,6 +108,7 @@ criados por el viento.
   const [menuOpen, setMenuOpen] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [fading, setFading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const currentPoem = poems.find((poem) => poem.id === activePoem);
 
@@ -123,6 +124,7 @@ criados por el viento.
   const handlePoemChange = (id) => {
     if (id === activePoem) return;
     setFading(true);
+    setImageLoaded(false);
     setTimeout(() => {
       setActivePoem(id);
       setFading(false);
@@ -150,10 +152,13 @@ criados por el viento.
       <div className="flex justify-center px-4 py-16 sm:pl-36 pb-24">
         <div className="flex max-w-6xl w-full relative">
           {/* Sidebar */}
-          <aside className="hidden md:block w-56 pr-8 py-12 border-r text-sm text-gray-700 sm:py-36 sticky top-0  overflow-y-auto">
+          <aside className="hidden md:block w-56 pr-8 py-12 border-r text-sm text-gray-700 sm:py-36 sticky top-0 overflow-y-auto">
             <div className="mb-6">
-              <a href="/" className="text-gray-500 text-xs hover:text-black transition-colors duration-300">
-                 ⤺ Home
+              <a
+                href="/"
+                className="text-gray-500 text-xs hover:text-black transition-colors duration-300"
+              >
+                ⤺ Home
               </a>
             </div>
             <nav className="space-y-2">
@@ -171,7 +176,7 @@ criados por el viento.
 
           {/* Mobile Nav */}
           <div className="md:hidden absolute top-0 left-0 right-0 flex justify-between items-center px-4">
-            <a href="/" className="text-sm text-gray-700 ">
+            <a href="/" className="text-sm text-gray-700">
               ← Home
             </a>
             <button
@@ -221,9 +226,7 @@ criados por el viento.
           <main className="flex-1 px-8 text-gray-900 mt-12 md:mt-0 overflow-y-auto">
             <div
               className={`transition-all duration-300 transform ${
-                fading
-                  ? "opacity-0 -translate-y-2"
-                  : "opacity-100 translate-y-0"
+                fading ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"
               }`}
             >
               {currentPoem && (
@@ -235,7 +238,10 @@ criados por el viento.
                     <img
                       src={`/images/photos/${currentPoem.filename}`}
                       alt={currentPoem.title}
-                      className="w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4"
+                      onLoad={() => setImageLoaded(true)}
+                      className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
+                        imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
+                      }`}
                     />
                   )}
                   <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
