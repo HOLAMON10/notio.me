@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const Collage = () => {
-  const filenames = [
+  const filenames =  useMemo(() => [
     "1.webp", "3.webp", "4.webp", "5.webp", "2.webp", "8.webp", "9.webp", "23.webp",
     "6.webp", "7.webp", "30.webp", "10.webp", "11.webp", "24.webp", "12.webp", "13.webp",
     "29.webp", "15.webp", "16.webp", "22.webp", "17.webp", "18.webp", "28.webp", "25.webp",
     "19.webp", "26.webp", "27.webp", "14.webp"
-  ];
+  ],[]);
 
   const [loaded, setLoaded] = useState({});
 
@@ -29,7 +29,7 @@ const Collage = () => {
         display: block;
         filter: blur(20px);
         transition: filter 1s ease, opacity 1s ease;
-        opacity: 0.8;
+        opacity: 1;
       }
 
       .collage__img--loaded {
@@ -51,11 +51,11 @@ const Collage = () => {
 
   // 🔷 Preload first 8 images on mount
   useEffect(() => {
-    filenames.slice(0, 8).forEach((file) => {
+    filenames.slice(0, 4).forEach((file) => {
       const img = new Image();
       img.src = `/images/photos/${file}`;
     });
-  }, []);
+  }, [filenames]);
 
   const handleLoad = (file) => {
     setLoaded((prev) => ({ ...prev, [file]: true }));
@@ -73,7 +73,8 @@ const Collage = () => {
               loading="lazy"
               onLoad={() => handleLoad(file)}
               style={{ aspectRatio: "4/5" }}
-              className={`collage__img ${loaded[file] ? "collage__img--loaded" : ""}`}
+              className={`collage__img ${loaded[file] ? 'collage__img--loaded' : ''}`}
+
             />
           ))}
         </div>

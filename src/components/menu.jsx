@@ -30,7 +30,7 @@ const HorizontalMenu = () => {
 
   const menuItems = [
     { icon: <FaHome size={20} />, label: "Home", href: "/" },
-    { icon: <FaLightbulb size={20} />, label: "Craft", href: "/craft" },
+    { icon: <FaLightbulb size={20} />, label: "Craft", href: "/projects" },
     { icon: <FaCamera size={20} />, label: "Collage", href: "/collage" },
     { icon: <FaFeatherAlt size={20} />, label: "Literature", href: "/writings" },
     {
@@ -64,7 +64,7 @@ const HorizontalMenu = () => {
   return (
     <footer className="flex justify-center items-center mb-3 bg-transparent">
       <div
-        className={`flex gap-2 bg-white rounded-full shadow-md px-2 py-1 transition-all duration-150 ease-out ${
+        className={`flex gap-2 bg-white rounded-full shadow-md px-2 py-1 transition-all duration-50 ease-out ${
           !isMobile && hoveredIndex !== null ? "px-4" : ""
         }`}
       >
@@ -77,15 +77,15 @@ const HorizontalMenu = () => {
           return (
             <button
               key={index}
-              className={`flex justify-center items-center w-10 h-10 text-gray-700 bg-slate-300 hover:bg-gray-200 rounded-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1.2)] transform shadow-sm
+              className={`flex justify-center items-center w-11 h-11 text-gray-700 bg-slate-300 hover:bg-gray-200  hover:ring-offset-2 rounded-full transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1.2)] transform shadow-sm
                 ${
                   !isMobile && isBefore
-                    ? "-translate-x-3"
+                    ? "-translate-x-1"
                     : ""
                 }
                 ${
                   !isMobile && isAfter
-                    ? "translate-x-3"
+                    ? "translate-x-1"
                     : ""
                 }
                 ${

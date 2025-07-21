@@ -4,6 +4,7 @@ import LandingPage from "./pages/landingpage";
 import Collage from "./components/Collage";
 import HorizontalMenu from "./components/menu";
 import Writings from "./components/writings";
+import Projects from "./components/Projects";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <div className="flex-1">
           <Routes>
+            <Route path="/projects" element={<Projects />} />
             <Route path="/" element={<LandingPage />} />
             <Route path="/collage" element={<Collage />} />
             <Route path="/writings" element={<Writings/>}/>

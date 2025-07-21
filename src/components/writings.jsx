@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FiMenu } from "react-icons/fi";
 import { IoChevronForwardSharp } from "react-icons/io5";
 
 const Writings = () => {
-  const poems = [
+  const poems = useMemo(() => [
     {
       id: "ode-to-a-nightingale",
       title: "Nadie Se Salva Solo",
@@ -102,7 +102,7 @@ criados por el viento.
       `,
       filename: "bahia.webp",
     },
-  ];
+  ],[]);
 
   const [activePoem, setActivePoem] = useState(poems[0].id);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -126,7 +126,7 @@ criados por el viento.
       const img = new Image();
       img.src = `/images/photos/${poem.filename}`;
     });
-  }, []);
+  }, [poems]);
 
   const handlePoemChange = (id, direction) => {
     if (id === activePoem) return;
