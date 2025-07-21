@@ -176,7 +176,9 @@ criados por el viento.
 
   return (
     <div
-      className="bg-gradient-to-br from-slate-100 via-slate to-slate-300 min-h-[105vh] "
+      className={`bg-gradient-to-br from-slate-100 via-slate to-slate-300 min-h-[105vh] transition-opacity duration-500 ${
+        pageLoaded ? "opacity-100" : "opacity-20"
+      }`}
     >
       <div className="flex justify-center px-4 py-16 sm:pl-36 pb-24">
         <div className="flex max-w-6xl w-full relative">
