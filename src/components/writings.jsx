@@ -109,51 +109,79 @@ criados por el viento.
   const [pageLoaded, setPageLoaded] = useState(false);
   const [fading, setFading] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState(null);
 
-  const currentPoem = poems.find((poem) => poem.id === activePoem);
-
-  const activeColor = "black";
+  const currentPoemIndex = poems.findIndex((p) => p.id === activePoem);
+  const currentPoem = poems[currentPoemIndex];
 
   useEffect(() => {
     document.title = "Desktop";
-    const timeout = setTimeout(() => {
-      setPageLoaded(true);
-    }, 50);
+    const timeout = setTimeout(() => setPageLoaded(true), 50);
     return () => clearTimeout(timeout);
   }, []);
 
-  const handlePoemChange = (id) => {
+  // 🔷 Preload all images once
+  useEffect(() => {
+    poems.forEach((poem) => {
+      const img = new Image();
+      img.src = `/images/photos/${poem.filename}`;
+    });
+  }, []);
+
+  const handlePoemChange = (id, direction) => {
     if (id === activePoem) return;
+    setSwipeDirection(direction);
     setFading(true);
     setImageLoaded(false);
     setTimeout(() => {
       setActivePoem(id);
       setFading(false);
+      setSwipeDirection(null);
     }, 300);
+  };
+
+  const handleSwipe = (direction) => {
+    if (direction === "left" && currentPoemIndex < poems.length - 1) {
+      handlePoemChange(poems[currentPoemIndex + 1].id, "left");
+    } else if (direction === "right" && currentPoemIndex > 0) {
+      handlePoemChange(poems[currentPoemIndex - 1].id, "right");
+    }
+  };
+
+  let touchStartX = 0;
+
+  const onTouchStart = (e) => {
+    touchStartX = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const deltaX = touchEndX - touchStartX;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX < 0) handleSwipe("left");
+      else handleSwipe("right");
+    }
   };
 
   const getPoemButtonClasses = (poemId) => {
     const isActive = activePoem === poemId;
-
     return [
       "relative block text-left w-full px-1 py-0.5 transition-colors duration-300",
       "after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-current after:transition-all after:duration-300",
       isActive
-        ? `text-${activeColor}-800 after:w-full`
-        : `text-gray-700 after:w-0 hover:text-${activeColor}-700 hover:after:w-full`,
+        ? "text-black-800 after:w-full"
+        : "text-gray-700 after:w-0 hover:text-black-700 hover:after:w-full",
     ].join(" ");
   };
 
   return (
     <div
-      className={`bg-gradient-to-br from-slate-100 via-slate to-slate-300 min-h-[105vh] transition-opacity duration-500 ${
-        pageLoaded ? "opacity-100" : "opacity-0"
-      }`}
+      className="bg-gradient-to-br from-slate-100 via-slate to-slate-300 min-h-[105vh] "
     >
       <div className="flex justify-center px-4 py-16 sm:pl-36 pb-24">
         <div className="flex max-w-6xl w-full relative">
           {/* Sidebar */}
-          <aside className="hidden md:block w-56 pr-8 py-12 border-r text-sm text-gray-700 sm:py-36 sticky top-0 overflow-y-auto">
+          <aside className="hidden md:block w-56 pr-8 py-12 border-r-4 border-gray-300 text-sm text-gray-700 sm:py-36 sticky top-0 overflow-y-auto">
             <div className="mb-6">
               <a
                 href="/"
@@ -211,23 +239,33 @@ criados por el viento.
                 </button>
               ))}
             </div>
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="absolute -left-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 shadow rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition"
-            >
-              <IoChevronForwardSharp
-                className={`text-lg text-gray-700 transition-transform ${
-                  menuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
+            {menuOpen && (
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="absolute -left-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 shadow rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition"
+              >
+                <IoChevronForwardSharp
+                  className={`text-lg text-gray-700 transition-transform ${
+                    menuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            )}
           </div>
 
           {/* Main Content */}
-          <main className="flex-1 px-8 text-gray-900 mt-12 md:mt-0 overflow-y-auto">
+          <main
+            className="relative flex-1 px-8 text-gray-900 mt-12 md:mt-0 overflow-y-auto"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
             <div
               className={`transition-all duration-300 transform ${
-                fading ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"
+                fading
+                  ? swipeDirection === "left"
+                    ? "opacity-0 -translate-x-4"
+                    : "opacity-0 translate-x-4"
+                  : "opacity-100 translate-x-0"
               }`}
             >
               {currentPoem && (
@@ -247,6 +285,15 @@ criados por el viento.
                   )}
                   <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
                     {currentPoem.content.trim()}
+                  </div>
+
+                  {/* Dynamic arrows */}
+                  <div className="sm:hidden text-center text-gray-700 text-[10px] mt-1">
+                    {currentPoemIndex > 0 && "←"}
+                    {currentPoemIndex > 0 &&
+                      currentPoemIndex < poems.length - 1 &&
+                      " "}
+                    {currentPoemIndex < poems.length - 1 && "→"}
                   </div>
                 </section>
               )}
