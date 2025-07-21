@@ -11,7 +11,7 @@ const Projects = () => {
   ];
 
   const experience = [
-    { name: "VIDA Software & Media", year: "2022 - present", url:"https://vidasoftmedia.com/" },    
+    { name: "VIDA Software & Media", year: "2022 - Present", url:"https://vidasoftmedia.com/" },    
   ];
 
   const renderList = (items) => (
@@ -49,7 +49,7 @@ const Projects = () => {
             </a>
         </div>
         <div className="flex-1 border-b border-dotted mx-2 border-gray-400"></div>
-        <span><TypingText           
+        <span className="text-gray-600 font-semibold"><TypingText           
             text={item.year}
             speed={100}
             startDelay={100}        
@@ -59,17 +59,17 @@ const Projects = () => {
   </div>
 );
   return (
-    <div className="flex justify-center bg-white px-4 sm:py-36 py-24 min-h-screen">
+    <div className="flex justify-center bg-white px-4 sm:py-36 py-24 min-h-screen bg-gray-100">
       <div className="w-full max-w-2xl space-y-10">
         <section>
-          <h2 className="text-lg font-semibold mb-3 text-gray-900">
+          <h2 className="text-lg font-semibold mb-3 text-gray-700">
             Projects
           </h2>
           {renderList(projects)}
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold mb-3 text-gray-900">
+          <h2 className="text-lg font-semibold mb-3 text-gray-700">
             Experience
           </h2>
           {renderList(experience)}
