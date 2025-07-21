@@ -63,14 +63,16 @@ const Projects = () => {
       <div className="w-full max-w-2xl space-y-10">
         <section>
           <h2 className="text-lg font-semibold mb-3 text-gray-700">
-            Projects
+            
+            <TypingText text={"Projects"} />
           </h2>
           {renderList(projects)}
         </section>
 
         <section>
           <h2 className="text-lg font-semibold mb-3 text-gray-700">
-            Experience
+            
+            <TypingText text={"Experience"} />
           </h2>
           {renderList(experience)}
         </section>
