@@ -11,7 +11,7 @@ const Projects = () => {
   ];
 
   const experience = [
-    { name: "VIDA Software & Media", year: "2022 - Present", url:"https://vidasoftmedia.com/" },    
+    { name: "VIDA Software & Media", year: "2022 - Present"},    
   ];
 
   const renderList = (items) => (
@@ -22,32 +22,39 @@ const Projects = () => {
         className="flex justify-between items-center text-sm text-gray-800 py-4"
       >
         <div key={item.url} className="mb-2">
-            <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                inline-flex
-                text-gray-600
-                gap-1
-                    font-semibold
-                    relative
-                    after:content-['']
-                    after:absolute
-                    after:left-0
-                    after:-bottom-1
-                    after:w-0
-                    after:h-0.5
-                    after:bg-current
-                    after:transition-all
-                    after:duration-300
-                    md:hover:after:w-full
-                "
-                >
-                <TypingText text={item.name} />
-                <ExternalLink className="w-4 h-4" />
-            </a>
-        </div>
+  {item.url ? (
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="
+        inline-flex
+        text-gray-600
+        gap-1
+        font-semibold
+        relative
+        after:content-['']
+        after:absolute
+        after:left-0
+        after:-bottom-1
+        after:w-0
+        after:h-0.5
+        after:bg-current
+        after:transition-all
+        after:duration-300
+        md:hover:after:w-full
+      "
+    >
+      <TypingText text={item.name} />
+      <ExternalLink className="w-4 h-4" />
+    </a>
+  ) : (
+    <span className="text-gray-600 font-semibold">
+      <TypingText text={item.name} />
+    </span>
+  )}
+</div>
+
         <div className="flex-1 border-b border-dotted mx-2 border-gray-400"></div>
         <span className="text-gray-600 font-semibold"><TypingText           
             text={item.year}
