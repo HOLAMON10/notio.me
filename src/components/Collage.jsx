@@ -49,7 +49,7 @@ const Collage = () => {
     };
   }, []);
 
-  // 🔷 Preload first 8 images on mount
+ 
   useEffect(() => {
     filenames.slice(0, 4).forEach((file) => {
       const img = new Image();

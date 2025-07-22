@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef,  useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Desktop = () => {
@@ -21,7 +21,7 @@ const Desktop = () => {
       image: "https://cdn.rauno.me/ixd/page-flip4-s.mp4#t=1",
     },
     {
-      label: "About Me",
+      label: "Literature",
       href: "/writings",
       type: "video",
       image: "https://cdn.rauno.me/screenshot-tiny.mp4#t=0.01",

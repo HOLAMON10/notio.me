@@ -31,7 +31,7 @@ const HorizontalMenu = () => {
   const menuItems = [
     { icon: <FaHome size={20} />, label: "Home", href: "/" },
     { icon: <FaLightbulb size={20} />, label: "Craft", href: "/projects" },
-    { icon: <FaCamera size={20} />, label: "Collage", href: "/collage" },
+    { icon: <FaCamera size={20} />, label: "Pictures", href: "/pictures" },
     { icon: <FaFeatherAlt size={20} />, label: "Literature", href: "/writings" },
     {
       icon: <FaGithub size={20} />,
