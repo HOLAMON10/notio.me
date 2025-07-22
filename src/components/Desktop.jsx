@@ -1,58 +1,48 @@
 import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Desktop = () => {
   const videoRefs = useRef({});
-  const [loaded, setLoaded] = useState({}); // track load state per app
+  const [loaded, setLoaded] = useState({});
+  const [hoverInfo, setHoverInfo] = useState(null); // label + screenX + bounds
+  const navigate = useNavigate();
 
   const apps = [
     {
       label: "Work",
+      href: "/projects",
       type: "video",
       image: "https://cdn.rauno.me/flume-s2.mp4#t=0.01",
-      onClick: () => alert("Work clicked"),
     },
     {
       label: "Pictures",
+      href: "/pictures",
       type: "video",
       image: "https://cdn.rauno.me/ixd/page-flip4-s.mp4#t=1",
-      onClick: () => alert("Pictures clicked"),
     },
     {
       label: "About Me",
+      href: "/writings",
       type: "video",
       image: "https://cdn.rauno.me/screenshot-tiny.mp4#t=0.01",
-      onClick: () => alert("About Me clicked"),
     },
   ];
 
-  useEffect(() => {
-    document.title = "Desktop";
-
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .fade-in-down {
-        opacity: 0;
-        transform: translateY(-10px);
-        animation: fadeInDown .5s ease-out forwards;
-      }
-
-      @keyframes fadeInDown {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
-  const handleMouseEnter = (app) => {
+  const handleMouseEnter = (app, bounds) => {
     const ref = videoRefs.current[app.label];
     if (ref) ref.play();
+    setHoverInfo({ label: app.label, x: bounds.left, bounds });
+  };
+
+  const handleMouseMove = (e, app, bounds) => {
+    const x = Math.min(Math.max(e.clientX, bounds.left), bounds.right);
+    const y = Math.min(Math.max(e.clientY, bounds.top), bounds.bottom);
+    setHoverInfo({
+      label: app.label,
+      x,
+      cursorY: y,
+      bounds,
+    });
   };
 
   const handleMouseLeave = (app) => {
@@ -61,10 +51,15 @@ const Desktop = () => {
       ref.pause();
       ref.currentTime = 0;
     }
+    setHoverInfo(null);
   };
 
   const handleLoadedData = (label) => {
     setLoaded((prev) => ({ ...prev, [label]: true }));
+  };
+
+  const handleClick = (href) => {
+    navigate(href);
   };
 
   const raunoStyle = {
@@ -78,54 +73,70 @@ const Desktop = () => {
       translateZ(0)
     `,
     position: "absolute",
-    top: "50%",
+    top: "55%",
     left: "50%",
-    willChange: "transform",
-    backfaceVisibility: "hidden",
-    transformStyle: "preserve-3d",
-    WebkitFontSmoothing: "antialiased",
-    MozOsxFontSmoothing: "grayscale",
-  };
-
-  const shadowStyle = {
-    boxShadow: "200px 200px 45px rgba(0, 0, 0, 0.4)",
-    transition: "box-shadow 0.3s ease",
-    borderRadius: "1px",
   };
 
   return (
     <div className="relative w-full min-h-screen bg-transparent">
+      {/* The vertical line rendered OUTSIDE of raunoStyle */}
+      {hoverInfo && (
+  <div
+    className="fixed flex flex-col items-center pointer-events-none"
+    style={{
+      left: hoverInfo.x,
+      transform: "translateY(-110%) translateX(-45%)",
+      top: `${hoverInfo.cursorY}px`,
+      zIndex: 50,
+    }}
+  >
+    <div className="text-base text-gray-700 mb-1 whitespace-nowrap font-semibold ">
+      {hoverInfo.label}
+    </div>
+    <div
+      className="w-px bg-gray-600"
+      style={{
+        height: `100px`,
+      }}
+    />
+  </div>
+)}
+
+
       <div
         className="flex gap-6 lg:gap-24 justify-center mt-48 px-4"
         style={raunoStyle}
       >
         {apps.map((app) => {
           let sizeClasses = "w-36 h-28 md:w-48 md:h-36 lg:w-96 lg:h-64";
-
-          if (app.label === "Work") {
+          if (app.label === "Work")
             sizeClasses = "w-32 h-48 md:w-36 md:h-64 lg:w-52 lg:h-96";
-          } else if (app.label === "Pictures") {
+          else if (app.label === "Pictures")
             sizeClasses = "w-48 h-32 md:w-64 md:h-48 lg:w-96 lg:h-72";
-          }
 
           const isLoaded = loaded[app.label];
 
           return (
             <div
               key={app.label}
-              className="flex flex-col items-center cursor-pointer fade-in-down"
-              onClick={app.onClick}
-              onMouseEnter={() => handleMouseEnter(app)}
-              onMouseLeave={() => handleMouseLeave(app)}
-              style={{
-                willChange: "transform",
-                backfaceVisibility: "hidden",
-                transformStyle: "preserve-3d",
+              className="relative flex flex-col items-center cursor-pointer fade-in-down group"
+              onMouseEnter={(e) => {
+                const bounds = e.currentTarget.getBoundingClientRect();
+                handleMouseEnter(app, bounds);
               }}
+              onMouseMove={(e) => {
+                const bounds = e.currentTarget.getBoundingClientRect();
+                handleMouseMove(e, app, bounds);
+              }}
+              onMouseLeave={() => handleMouseLeave(app)}
+              onClick={() => handleClick(app.href)}
             >
               <div
-                className={`${sizeClasses} overflow-hidden transition`}
-                style={shadowStyle}
+                className={`${sizeClasses} overflow-hidden relative transition-transform duration-300 ease-out group-hover:scale-105 group-hover:shadow-xl`}
+                style={{
+                  boxShadow: "200px 200px 45px rgba(0, 0, 0, 0.4)",
+                  borderRadius: "1px",
+                }}
               >
                 {app.type === "video" ? (
                   <video
@@ -133,7 +144,7 @@ const Desktop = () => {
                     src={app.image}
                     muted
                     onLoadedData={() => handleLoadedData(app.label)}
-                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform ${
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
                       isLoaded ? "blur-0 opacity-100" : "blur-md opacity-80"
                     }`}
                   />
@@ -142,7 +153,7 @@ const Desktop = () => {
                     src={app.image}
                     alt={app.label}
                     onLoad={() => handleLoadedData(app.label)}
-                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform ${
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
                       isLoaded ? "blur-0 opacity-100" : "blur-md opacity-80"
                     }`}
                   />
