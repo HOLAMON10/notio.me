@@ -112,7 +112,6 @@ criados por el viento.
   const [swipeDirection, setSwipeDirection] = useState(null);
 
   const currentPoemIndex = poems.findIndex((p) => p.id === activePoem);
-  const currentPoem = poems[currentPoemIndex];
 
   useEffect(() => {
     document.title = "Desktop";

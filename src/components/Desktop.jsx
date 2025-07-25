@@ -1,4 +1,4 @@
-import { useRef,  useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Desktop = () => {
@@ -9,23 +9,24 @@ const Desktop = () => {
 
   const apps = [
     {
-      label: "Work",
+      label: "Projects",
       href: "/projects",
       type: "video",
       image: "https://cdn.rauno.me/flume-s2.mp4#t=0.01",
     },
     {
-      label: "Pictures",
-      href: "/pictures",
+      label: "Literature",
+      href: "/writings",
       type: "video",
       image: "https://cdn.rauno.me/ixd/page-flip4-s.mp4#t=1",
     },
     {
-      label: "Literature",
-      href: "/writings",
+      label: "Pictures",
+      href: "/pictures",
       type: "video",
       image: "https://cdn.rauno.me/screenshot-tiny.mp4#t=0.01",
     },
+    
   ];
 
   const handleMouseEnter = (app, bounds) => {
@@ -79,6 +80,9 @@ const Desktop = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-transparent">
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center z-50 px-4">
+ 
+</div>
       {/* The vertical line rendered OUTSIDE of raunoStyle */}
       {hoverInfo && (
   <div
@@ -109,7 +113,7 @@ const Desktop = () => {
       >
         {apps.map((app) => {
           let sizeClasses = "w-36 h-28 md:w-48 md:h-36 lg:w-96 lg:h-64";
-          if (app.label === "Work")
+          if (app.label === "Projects")
             sizeClasses = "w-32 h-48 md:w-36 md:h-64 lg:w-52 lg:h-96";
           else if (app.label === "Pictures")
             sizeClasses = "w-48 h-32 md:w-64 md:h-48 lg:w-96 lg:h-72";

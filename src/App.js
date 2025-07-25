@@ -5,6 +5,7 @@ import Collage from "./components/Collage";
 import HorizontalMenu from "./components/menu";
 import Writings from "./components/writings";
 import Projects from "./components/Projects";
+import './App.css'
 
 function App() {
   return (
