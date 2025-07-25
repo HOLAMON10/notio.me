@@ -31,7 +31,7 @@ porque nadie nunca se salva solo.
 The devil between your thighs,
 dont let us have a bite,
 of a that submarine of wine.
-Only a pretentious moment,
+Only a divtentious moment,
 we dont really want.
 One step to the longest stair,
 too scare to lift up that way.
@@ -120,7 +120,7 @@ criados por el viento.
     return () => clearTimeout(timeout);
   }, []);
 
-  // 🔷 Preload all images once
+  // 🔷 divload all images once
   useEffect(() => {
     poems.forEach((poem) => {
       const img = new Image();
@@ -255,52 +255,166 @@ criados por el viento.
             )}
           </div>
 
-          {/* Main Content */}
-          <main
-            className="relative flex-1 px-8 text-gray-900 mt-12 md:mt-0 overflow-y-auto"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          >
-            <div
-              className={`transition-all duration-300 transform ${
-                fading
-                  ? swipeDirection === "left"
-                    ? "opacity-0 -translate-x-4"
-                    : "opacity-0 translate-x-4"
-                  : "opacity-100 translate-x-0"
-              }`}
-            >
-              {currentPoem && (
-                <section id={currentPoem.id}>
-                  <h2 className="text-2xl font-semibold mb-4">
-                    {currentPoem.title}
-                  </h2>
-                  {currentPoem.filename && (
-                    <img
-                      src={`/images/photos/${currentPoem.filename}`}
-                      alt={currentPoem.title}
-                      onLoad={() => setImageLoaded(true)}
-                      className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
-                        imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
-                      }`}
-                    />
-                  )}
-                  <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
-                    {currentPoem.content.trim()}
-                  </div>
+<main
+  className="relative flex-1 px-8 text-gray-900 mt-12 md:mt-0 overflow-y-auto"
+  onTouchStart={onTouchStart}
+  onTouchEnd={onTouchEnd}
+>
+  <div
+    className={`transition-all duration-300 transform ${
+      fading
+        ? swipeDirection === "left"
+          ? "opacity-0 -translate-x-4"
+          : "opacity-0 translate-x-4"
+        : "opacity-100 translate-x-0"
+    }`}
+  >
+    {activePoem === "ode-to-a-nightingale" && (
+      <section id="ode-to-a-nightingale">
+        <h2 className="text-2xl font-semibold mb-4">Nadie Se Salva Solo</h2>
+        <img
+          src="/images/photos/patagonia.webp"
+          alt="Nadie Se Salva Solo"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
+          }`}
+        />
+        <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
+          {`Nadie soporta la existencia solo.
+Nadie carga con el peso miserable de sí mismo.
+Nadie aguanta el huracán neurótico de la infernal soledad.
 
-                  {/* Dynamic arrows */}
-                  <div className="sm:hidden text-center text-gray-700 text-[10px] mt-1">
-                    {currentPoemIndex > 0 && "←"}
-                    {currentPoemIndex > 0 &&
-                      currentPoemIndex < poems.length - 1 &&
-                      " "}
-                    {currentPoemIndex < poems.length - 1 && "→"}
-                  </div>
-                </section>
-              )}
-            </div>
-          </main>
+Nunca nadie se salva solo.
+
+Un filósofo dijo una vez:
+"Lo sabio es pedir ayuda."
+y siguió su camino en la montaña.
+
+La idea no es perderse en el Otro,
+pero sabernos libres con el Otro,
+porque nadie nunca se salva solo.`}
+        </div>
+      </section>
+    )}
+
+    {activePoem === "thing-of-beauty" && (
+      <section id="thing-of-beauty">
+        <h2 className="text-2xl font-semibold mb-4">Dear Dante</h2>
+        <img
+          src="/images/photos/dante1.webp"
+          alt="Dear Dante"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
+          }`}
+        />
+        <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
+          {`The devil between your thighs,
+dont let us have a bite,
+of a that submarine of wine.
+Only a divtentious moment,
+we dont really want.
+One step to the longest stair,
+too scare to lift up that way.
+Think twice;
+and run out to another stay.
+just to enter Dante's Cave.`}
+        </div>
+      </section>
+    )}
+
+    {activePoem === "road-not-taken" && (
+      <section id="road-not-taken">
+        <h2 className="text-2xl font-semibold mb-4">Laberinto</h2>
+        <img
+          src="/images/photos/writing1.webp"
+          alt="Laberinto"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
+          }`}
+        />
+        <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
+          {`Planeando en este inexplicable camino,
+cuyo laberinto tropieza el todo del mundo.
+Buscando una certeza que no viene,
+no viene y no está en esta parte.
+
+El veneno y Florencia en la lejanía,
+de Barcelona que se aleja con cada segundo.
+Tan cerca que desde ese momento,
+ningún hombre se atrevió a tocar,
+ella sigue rondando los laureles,
+como Cervantes, confiados de su llegada.
+
+Si ningún hombre la sintió otra vez,
+estas palabras mentiras y falacias traerán,
+y nadie más volvió a amar.
+Tapadas por las sombras de la historia.
+
+Aquello inexplicable, irrazonable y humano.
+Quizás demasiado.`}
+        </div>
+      </section>
+    )}
+
+    {activePoem === "if" && (
+      <section id="if">
+        <h2 className="text-2xl font-semibold mb-4">Efimero</h2>
+        <img
+          src="/images/photos/writing2.webp"
+          alt="Efimero"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
+          }`}
+        />
+        <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
+          {`Lo efimero como uno, dos, tres,
+con el querer de ser uno.
+Sobre una cama antigua,
+encontrando a lo que ibamos,
+ibamos a ser efimeros.
+
+Un amor con pradera al sur,
+buscando el Norte.
+No venia el horizonte,
+sobre una cama antigua, 
+no era el unico hombre.`}
+        </div>
+      </section>
+    )}
+
+    {activePoem === "daffodils" && (
+      <section id="daffodils">
+        <h2 className="text-2xl font-semibold mb-4">Bahia</h2>
+        <img
+          src="/images/photos/bahia.webp"
+          alt="Bahia"
+          onLoad={() => setImageLoaded(true)}
+          className={`w-full max-w-[500px] max-h-[300px] object-contain rounded mb-4 transition-all duration-500 ${
+            imageLoaded ? "opacity-100 blur-0" : "opacity-80 blur"
+          }`}
+        />
+        <div className="text-gray-700 whitespace-pre-wrap sm:pl-16 pl-8">
+          {`Una bahía de vientos chocantes,
+que se deslizan entre el roce.
+¿o el goce?
+Las hojas se mecen en el viento,
+bailan con las almas,
+como si de mucho tiempo se tratase,
+y otra vez.
+Los océanos entonan su melodía,
+guiados por la luna,
+criados por el viento.`}
+        </div>
+      </section>
+    )}
+  </div>
+</main>
+
+
         </div>
       </div>
     </div>
