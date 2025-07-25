@@ -23,17 +23,16 @@ const LandingPage = () => {
       <main className="flex-1 flex justify-center items-center relative z-10">
         
         {/* Left Intro Block */}
-        <div className="absolute top-24 left-6 sm:left-36 max-w-2xl text-left px-4 sm:px-0 animate-fade-in-up">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight drop-shadow-sm">
-            I Build Cool Stuff So You Don’t Have To.
-          </h1>
-          <p className="mt-4 text-base md:text-lg text-gray-700">
-            Hi, I’m John part coder, part designer, part caffeine-fueled gremlin. I turn complex ideas into slick interfaces (sometimes on purpose).
-          </p>
-          <p className="mt-2 text-base md:text-lg text-gray-700">
-            This portfolio is my digital lair of builds, bugs, and big-brain energy.
-          </p>
-        </div>
+       <div className="absolute top-24 left-6 sm:left-36 max-w-2xl text-left px-4 sm:px-0 animate-fade-in-up">
+  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight drop-shadow-sm">
+    I Build Cool Stuff So You Don’t Have To.
+  </h1>
+  <p className="mt-4 text-base md:text-lg text-gray-700">
+Hi, I’m John part coder, part designer, part caffeine-fueled gremlin. I turn complex ideas into slick interfaces (sometimes on purpose).  </p>
+  <p className="mt-2 text-base md:text-lg text-gray-700">
+    This portfolio? It's more than a vibe. Poke around. Projects, pics, poems it's all cooked fresh.
+  </p> 
+</div>
 
         {/* Right Tech Stack Block */}
 <div className="hidden sm:block absolute top-28 right-6 sm:right-16 z-30 w-[280px] bg-white/30 backdrop-blur-md rounded-xl shadow-lg p-4 animate-fade-in-up delay-150 border border-white/40">
