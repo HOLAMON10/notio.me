@@ -47,19 +47,19 @@ const HorizontalMenu = () => {
   ];
 
   const handleClick = (item, index) => {
-    if (isMobile) {
-      setTappedIndex(index);
-      setTimeout(() => {
-        setTappedIndex(null);
-      }, 200);
-    }
+  if (isMobile) {
+    setTappedIndex(index);
+    setTimeout(() => {
+      setTappedIndex(null);
+    }, 200);
+  }
 
-    if (item.external) {
-      window.open(item.href, "_blank");
-    } else if (item.href) {
-      navigate(item.href);
-    }
-  };
+  if (item.external || item.href.startsWith("mailto:")) {
+    window.open(item.href, "_blank");
+  } else if (item.href) {
+    navigate(item.href);
+  }
+};
 
   return (
     <footer className="flex justify-center items-center mb-3 bg-transparent">
